@@ -32,6 +32,9 @@ class VReader:
         # create an analog input channel on pin 0
         self.chan0 = AnalogIn(self.mcp, MCP.P0)
 
+    # returns the voltage going into the MCP3008 (from the AD8495 board)
+    # takes the raw voltage reading from the ADC and rescales it to the correct value
+    # rescaling is based on experimental data
     def get(self):
 
         # get raw voltage reading

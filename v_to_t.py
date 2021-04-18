@@ -33,6 +33,8 @@ class VtoT:
 
         self.tf = interp1d(V, T)
 
+    # returns temperature as a function of voltage going into the MCP3008 (from the AD8495 board)
+    # function is based on NIST calibrations of AD8495 chips
     def get(self, v):
 
         return self.tf(v)
