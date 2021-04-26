@@ -3,6 +3,9 @@
 from v_reader import VReader
 from v_to_t import VtoT
 
+def C_to_F(temp_c):
+
+    return temp_c * 9.0/5.0 + 32.0
 
 class PController:
 
@@ -21,4 +24,5 @@ class PController:
     
     def update(self, target):
 
-        print(self.read_T())
+        T = self.read_T()
+        print(str(T)+" C ("+str(C_to_F(T))+" F)")
