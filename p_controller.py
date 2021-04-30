@@ -2,6 +2,8 @@
 
 from v_reader import VReader
 from v_to_t import VtoT
+from moving_average import MovingAverage
+import RPi.GPIO as GPIO
 
 def C_to_F(temp_c):
 
@@ -11,9 +13,14 @@ class PController:
 
     def __init__(self):
 
+        # initialize voltage reader
         self.vreader = VReader()
 
+        # initialize voltage-to-temp converter
         self.v_to_t = VtoT()
+
+        # initialize moving average with an appropriate number of samples
+        self.ma = MovingAverage(20)
 
 
 
@@ -22,7 +29,12 @@ class PController:
         v = self.vreader.get()
         return self.v_to_t.get(v)
     
+    # update the relay state 
+    #   based on the given target temperature
+    #   and the read temperature
     def update(self, target):
 
         T = self.read_T()
-        print(str(T)+" C ("+str(C_to_F(T))+" F)")
+        T_avg = self.ma.append(T)
+
+        print(str(T_avg)+" C ("+str(C_to_F(T_avg))+" F)")

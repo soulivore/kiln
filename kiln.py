@@ -26,6 +26,7 @@ class Kiln:
 
     def run(self):
 
+        # initialize shutdown signal receivers
         signal(SIGINT, self.shutdown)
         signal(SIGTERM, self.shutdown)
 
@@ -35,6 +36,7 @@ class Kiln:
 
             while self.is_running:
 
+                # update p controller with target temperature
                 self.p_ctrl.update(0.0)
 
                 time.sleep(1.0)
