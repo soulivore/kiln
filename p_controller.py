@@ -61,6 +61,11 @@ class PController:
 
         # determine what the temperature in the kiln should be right now
         T_target = self.t_profile.get_target()
-        #print("target temp = "+str(T_target)+" C");
+        print("target temp = "+str(T_target)+" C");
 
+        # determine if the coil state needs to be switched
+        if not self.relay.is_on() and T_avg < T_target - T_tolerance:
+            self.relay.turn_on()
 
+        elif self.relay.is_on() and T_avg > T_target + T_tolerance:
+            self.relay.turn_off()
