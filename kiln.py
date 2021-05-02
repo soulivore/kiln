@@ -7,15 +7,17 @@ from p_controller import PController
 from relay import Relay
 import RPi.GPIO as GPIO
 
+# this top-level class mostly just handles errors
 class Kiln:
 
-    def __init__(self):
+    # initializes with the filename of the temperature profile csv
+    def __init__(self, filename):
 
         # initialize relay controller
         self.relay = Relay()
         
         # initialize P controller
-        self.p_ctrl = PController(self.relay)
+        self.p_ctrl = PController(self.relay, filename)
 
     def run(self):
 
@@ -67,6 +69,16 @@ class Kiln:
 
 if __name__ == "__main__":
 
-    kiln = Kiln()
+    # parse the argument of the command line call:
+    #   the filename of the temperature profile csv
+    if len(sys.argv) == 2 and sys.argv[1] != "":
 
-    kiln.run()
+        kiln = Kiln(sys.argv[1])
+
+        kiln.run()
+
+    else :
+        print("ERROR: you must execute the script with the form: ./kiln.py [temp_profile.csv]")
+        print("     sys.argv = "+str(sys.argv))
+        print("     Aborting.")
+        sys.exit(0)
