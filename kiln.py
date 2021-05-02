@@ -4,7 +4,6 @@ import sys
 import time
 from signal import signal, SIGINT, SIGTERM
 from p_controller import PController
-from relay import Relay
 import RPi.GPIO as GPIO
 
 # this top-level class mostly just handles errors
@@ -13,11 +12,8 @@ class Kiln:
     # initializes with the filename of the temperature profile csv
     def __init__(self, filename):
 
-        # initialize relay controller
-        self.relay = Relay()
-        
         # initialize P controller
-        self.p_ctrl = PController(self.relay, filename)
+        self.p_ctrl = PController(filename)
 
     def run(self):
 
@@ -57,7 +53,7 @@ class Kiln:
         print("shutdown signal received: "+str(signal_received))
 
         # turn off the relay
-        self.relay.turn_off()
+        self.p_ctrl.relay.turn_off()
 
         print("relay off")
 

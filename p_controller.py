@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import time
+from relay import Relay
 from v_reader import VReader
 from v_to_t import VtoT
 from moving_average import MovingAverage
@@ -32,13 +33,11 @@ def C_to_F(temp_c):
 #   the coils should be on or off
 class PController:
 
-    # initializes with 
-    #   an instance of the relay controller class 
-    #   the filename of the temperature profile csv
-    def __init__(self, relay, filename):
+    # initializes with the filename of the temperature profile csv
+    def __init__(self, filename):
 
-        # store instance of relay class that was initialized in Kiln
-        self.relay = relay
+        # initialize relay controller
+        self.relay = Relay()
 
         # initialize voltage reader
         self.vreader = VReader()
