@@ -11,7 +11,10 @@ def C_to_F(temp_c):
 
 class PController:
 
-    def __init__(self):
+    def __init__(self, relay):
+
+        # store instance of relay class that was initialized in Kiln
+        self.relay = relay
 
         # initialize voltage reader
         self.vreader = VReader()
@@ -32,8 +35,11 @@ class PController:
     # update the relay state 
     #   based on the given target temperature
     #   and the read temperature
+    # arguments are:
+    #   target temp
     def update(self, target):
 
+        # determine the temperature in the kiln right now
         T = self.read_T()
         T_avg = self.ma.append(T)
 
