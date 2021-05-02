@@ -61,6 +61,9 @@ class Kiln:
 
         print("relay off")
 
+        # write any logged data
+        self.p_ctrl.logger.write()
+
         # un-initialize GPIOs
         GPIO.cleanup()
 
