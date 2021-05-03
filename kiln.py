@@ -50,7 +50,7 @@ class Kiln:
         elif signal_received == 15 :
             signal_received = "SIGTERM"
 
-        print("shutdown signal received: "+str(signal_received))
+        print("\n\n\nshutdown signal received: "+str(signal_received))
 
         # turn off the relay
         self.p_ctrl.relay.turn_off()

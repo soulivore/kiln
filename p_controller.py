@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import time
 from relay import Relay
 from v_reader import VReader
@@ -8,6 +9,7 @@ from moving_average import MovingAverage
 from t_profile import TProfile
 from logger import Logger
 import RPi.GPIO as GPIO
+from colorama import Fore, Back, Style
 
 # the P controller turns the coils on and off with hysteresis
 #   so that we don't constantly switch them and break the coils or relay
@@ -69,11 +71,9 @@ class PController:
         # determine the temperature in the kiln right now
         T = self.read_T()
         T_avg = self.ma.append(T)
-        #print("actual temp = "+str(T_avg)+" C ("+str(C_to_F(T_avg))+" F)")
 
         # determine what the temperature in the kiln should be right now
         T_target = self.t_profile.get_target()
-        #print("target temp = "+str(T_target)+" C");
 
         # determine if the coil state needs to be switched
         # if it switches, log it
@@ -86,7 +86,18 @@ class PController:
             self.relay.turn_off()
             switched = True
 
+        # log the data 
         self.logger.log(time.time(), T_avg, self.relay.is_on(), switched)
+
+        # output to the console
+        print("target temp = "+str(int(T_target))+" C     ("+str(int(C_to_F(T_target)))+" F)          ")
+        print("actual temp = "+str(int(T_avg))+" C     ("+str(int(C_to_F(T_avg)))+" F)          ")
+        if self.relay.is_on(): 
+            print("relay: "+Back.GREEN+Fore.BLACK+"ON"+Style.RESET_ALL)
+        else :
+            print("relay: "+Back.RED+Fore.BLACK+"OFF"+Style.RESET_ALL)
+        print("\033[A\033[A\033[A\033[A\r") # reset print location to beginning of the above text block
+
 
 
 

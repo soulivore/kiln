@@ -53,6 +53,10 @@ class TProfile:
         times = np.array(times)
         temps = np.array(temps)
 
+        # output to terminal
+        for i in range(len(times)):
+            print(str(times[i])+" hours:    "+str(temps[i])+" C")
+
         self.tf = interp1d(times, temps)
 
         self.start_time = time.time()
