@@ -1,0 +1,6 @@
+bugs to fix:
+average temps reported were negative,
+    patched the problem by putting a negative sign on the 
+    determination of T_avg in p_controller.py
+
+relay state needs some spaces after so it doesn't say ONF

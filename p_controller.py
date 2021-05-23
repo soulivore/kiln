@@ -70,7 +70,7 @@ class PController:
 
         # determine the temperature in the kiln right now
         T = self.read_T()
-        T_avg = self.ma.append(T)
+        T_avg = -self.ma.append(T)
 
         # determine what the temperature in the kiln should be right now
         T_target = self.t_profile.get_target()
