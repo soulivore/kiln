@@ -85,7 +85,7 @@ class TProfile:
         elif self.tf.x[-1] < dt_h:
             return self.tf.y[-1]
         else :
-            raise RuntimeError ("Time delta cannot be negative. Aborting.")
+            raise RuntimeError ("Time delta "+str(dt_h)+" cannot be negative. Aborting.")
 
 
 

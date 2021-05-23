@@ -10,8 +10,4 @@ kiln failed with the error shown in error.png
         is the relay coil pulling down the voltage on the 5V line? 
 
 
-relay state needs some spaces after so it doesn't say ONF
 
-logger needs to log on failures
-
-error messages need values

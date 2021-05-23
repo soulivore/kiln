@@ -19,6 +19,15 @@ from conversions import C_to_F
 T_tolerance = 10 # degrees C
 # i.e. this is half of the width of the hysteresis loop
 
+# strip a string segment of anything before and including a "/"
+def chop_off_folder(instr):
+
+    i = instr.rfind("/")
+    if i != -1 :
+        return instr[i+1:]
+    else :
+        return instr
+
 # strip a string segment from the end of a string and return the result
 def chop_off_end(instr, suffix):
 
@@ -52,13 +61,8 @@ class PController:
         self.t_profile = TProfile(filename)
 
         # initialize data logger
-        self.logger = Logger(chop_off_end(filename, ".csv"))
+        self.logger = Logger(chop_off_end(chop_off_folder(filename), ".csv"))
 
-    def read_T(self):
-
-        v = self.vreader.get()
-        return self.v_to_t.get(v)
-    
     # update the relay state 
     #   based on the given target temperature
     #   and the read temperature
@@ -67,8 +71,9 @@ class PController:
     def update(self, target):
 
         # determine the temperature in the kiln right now
-        T = self.read_T()
-        T_avg = -self.ma.append(T)
+        v = self.vreader.get()
+        T = self.v_to_t.get(v)
+        T_avg = self.ma.append(T)
 
         # determine what the temperature in the kiln should be right now
         T_target = self.t_profile.get_target()
@@ -89,11 +94,11 @@ class PController:
 
         # output to the console
         print("target temp = "+str(int(T_target))+" C     ("+str(int(C_to_F(T_target)))+" F)          ")
-        print("actual temp = "+str(int(T_avg))+" C     ("+str(int(C_to_F(T_avg)))+" F)          ")
+        print("actual temp = "+str(int(T_avg))+" C     ("+str(int(C_to_F(T_avg)))+" F)     [V = "+str(v)+" V, T = "+str(int(T))+" C ("+str(int(C_to_F(T)))+" F)]             ")
         if self.relay.is_on(): 
-            print("relay: "+Back.GREEN+Fore.BLACK+"ON"+Style.RESET_ALL)
+            print("relay: "+Back.GREEN+Fore.BLACK+"ON"+Style.RESET_ALL+"          ")
         else :
-            print("relay: "+Back.RED+Fore.BLACK+"OFF"+Style.RESET_ALL)
+            print("relay: "+Back.RED+Fore.BLACK+"OFF"+Style.RESET_ALL+"          ")
         print("\033[A\033[A\033[A\033[A\r") # reset print location to beginning of the above text block
 
 
@@ -101,6 +106,4 @@ class PController:
 
 if __name__ == "__main__":
 
-    print(chop_off_end("test.csv",".csv"))
-    print(chop_off_end("test",".csv"))
-
+    pass
