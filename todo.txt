@@ -4,10 +4,14 @@ average temps reported were negative,
     determination of T_avg in p_controller.py
 kiln failed with the error shown in error.png
     this is probably the same problem as above
-    updates:
+    update:
         the temperature reading seems to still be working without additional modifications
         so what was the problem?
         is the relay coil pulling down the voltage on the 5V line? 
-
-
+    update:
+        it was not a code problem--it is an electrical problem
+        when I turn on the coils, the temperature in the kiln appears to drop
+        this is weird because it seemed to be reading ambient air temp correctly
+    fixed:
+        the TC was labeled backward. Reveresed polarity on the TC to fix the problem
 
