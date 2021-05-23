@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 #   time, temp
 #   ...
 # the times shall be given in hours (fractional hours are allowed)
+# the temps shall be given in celcius
 # the first coordinate shall be time = 0
 #   (the first temp does not have to be zero)
 # the time of the last coordinate is the shutoff time of the kiln
@@ -77,7 +78,14 @@ class TProfile:
         # time difference in floating-point hours
         dt_h = float(dt)/60.0/60.0 # h
 
-        return self.get_temp_vs_time(dt_h)
+        # for now, if the current time exceeds the last time coordinate in the csv,
+        #   just hold at the temperature of the last coordinate
+        if 0 < dt_h and dt_h < self.tf.x[-1]:
+            return self.get_temp_vs_time(dt_h)
+        elif self.tf.x[-1] < dt_h:
+            return self.tf.y[-1]
+        else :
+            raise RuntimeError ("Time delta cannot be negative. Aborting.")
 
 
 
