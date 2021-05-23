@@ -2,5 +2,16 @@ bugs to fix:
 average temps reported were negative,
     patched the problem by putting a negative sign on the 
     determination of T_avg in p_controller.py
+kiln failed with the error shown in error.png
+    this is probably the same problem as above
+    updates:
+        the temperature reading seems to still be working without additional modifications
+        so what was the problem?
+        is the relay coil pulling down the voltage on the 5V line? 
+
 
 relay state needs some spaces after so it doesn't say ONF
+
+logger needs to log on failures
+
+error messages need values

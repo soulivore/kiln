@@ -10,6 +10,7 @@ from t_profile import TProfile
 from logger import Logger
 import RPi.GPIO as GPIO
 from colorama import Fore, Back, Style
+from conversions import C_to_F
 
 # the P controller turns the coils on and off with hysteresis
 #   so that we don't constantly switch them and break the coils or relay
@@ -26,9 +27,6 @@ def chop_off_end(instr, suffix):
         return instr[:i]
     else :
         return instr
-
-def C_to_F(temp_c):
-    return temp_c * 9.0/5.0 + 32.0
 
 # It's a PID controller, except there's no I or D
 # Looks at current temp and target temp and decides whether
