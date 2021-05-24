@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import sys
+import subprocess
 import time
 from signal import signal, SIGINT, SIGTERM
 from p_controller import PController
@@ -11,6 +12,13 @@ class Kiln:
 
     # initializes with the filename of the temperature profile csv
     def __init__(self, filename):
+
+        # check if we are running in screen. If not, terminate
+        # this command will fail if the program is executed outside of screen
+        try :
+            subprocess.check_output(['pgrep', '-f', 'screen'])
+        except subprocess.CalledProcessError :
+            raise RuntimeError ("Program is not running in screen. Aborting. Please restart in screen.")
 
         # initialize P controller
         self.p_ctrl = PController(filename)
