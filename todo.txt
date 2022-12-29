@@ -1,7 +1,26 @@
+features to add:
+
+somehow plot the target temp curve on start in the terminal. not sure how that works
+
+
+
+
+
+
 bugs to fix:
+
+sometimes text does not erase itself when running in screen
+problem seems to depend on initial conditions.
+got it to work after running vim, exiting, then running kiln
+
+
+
+
+
 average temps reported were negative,
     patched the problem by putting a negative sign on the 
     determination of T_avg in p_controller.py
+
 kiln failed with the error shown in error.png
     this is probably the same problem as above
     update:

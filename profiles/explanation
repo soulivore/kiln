@@ -1,0 +1,11 @@
+how to read the filenames in this folder:
+
+example: profile_brass_2.5dia_2300_0300
+
+metal: brass
+flask diameter in inches: 2.5dia
+time to start the program on the previous day: 2300
+time at which the program actually starts heating on the next day: 0300
+
+to determine when program ends (i.e. when metal is poured), 
+    add total number of program hours to the start time
